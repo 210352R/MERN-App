@@ -1,71 +1,60 @@
 import React from "react";
-import { useState ,useEffect} from "react";
-import { useParams } from "react-router-dom";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function EditPost(props) {
+  const [values, setValues] = useState({
+    topic: "",
+    description: "",
+    postCategory: "",
+  });
 
-  const [values , setValues] = useState({
-    topic :'',
-    description : '',
-    postCategory : ''
-  })
-
-  const onChangeHandler = (e)=>{
-    const {name,value} = e.target;
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [name] : value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   // Use the useParams hook to access the 'id' URL parameter
   const { id } = useParams();
 
   // Fetching data from database   ---
-  useEffect(()=>{
-    
-    axios.get(`http://localhost:8000/post/${id}`)
-    .then(res=>{
-      console.log(res.data.existingPost);  
+  useEffect(() => {
+    axios.get(`http://localhost:8000/post/${id}`).then((res) => {
+      console.log(res.data.existingPost);
       setValues({
-        topic : res.data.existingPost.topic,
-        description : res.data.existingPost.description,
-        postCategory : res.data.existingPost.postCategory
-      })
-    })
-  },[])
-  
-  
+        topic: res.data.existingPost.topic,
+        description: res.data.existingPost.description,
+        postCategory: res.data.existingPost.postCategory,
+      });
+    });
+  }, []);
 
-
-
-
-  const onClickHandle = (e)=>{
+  const onClickHandle = (e) => {
     e.preventDefault();
     console.log(values);
 
-    // call backend Server --- 
-    axios.put(`http://localhost:8000/post/update/${id}`,values)  // menna methana thmai yanna one body eka yawanne balanna meka
-    .then((res)=>{
-        if(res.data.success){
+    // call backend Server ---
+    axios
+      .put(`http://localhost:8000/post/update/${id}`, values) // menna methana thmai yanna one body eka yawanne balanna meka
+      .then((res) => {
+        if (res.data.success) {
           setValues({
             ...values,
-            topic : '',
-            description : '',
-            postCategory : ''
-          })
+            topic: "",
+            description: "",
+            postCategory: "",
+          });
         }
-        alert("Post Updated Successfully --- ")
-    }).catch(()=>{
-      console.log("Error ---------")
-    })
-
-  }
-
-
-
-
+        alert("Post Updated Successfully --- ");
+      })
+      .catch(() => {
+        console.log("Error ---------");
+      });
+  };
 
   return (
     <>
@@ -73,7 +62,7 @@ export default function EditPost(props) {
         <div className="text-align-center">
           <h2 className="h2 font-weight-bold  text-center shadow p-3 rounded">
             {" "}
-            Create new post{" "}
+            Edit Post{" "}
           </h2>
         </div>
         <div className="d-flex justify-content-center bg-light p-3">
@@ -85,7 +74,7 @@ export default function EditPost(props) {
                   type="text"
                   class="form-control"
                   id="formGroupTopic"
-                  name = 'topic'
+                  name="topic"
                   value={values.topic}
                   onChange={onChangeHandler}
                   placeholder="Enter Topic "
@@ -116,16 +105,34 @@ export default function EditPost(props) {
                   placeholder="Enter Post Category"
                 />
               </div>
-              <button type="submit" class="btn btn-primary px-3 mt-4 ms-3" style={{fontSize:18}}
-              onClick={onClickHandle}>
-              <i class="fa-regular fa-bookmark"></i> &nbsp;Save
-              </button>
+              <div className="buttonConatainer" style={{}}>
+                <button
+                  type="submit"
+                  class="btn btn-primary px-3 mt-4 ms-3"
+                  style={{ fontSize: 18 }}
+                  onClick={onClickHandle}
+                >
+                  <i class="fa-regular fa-bookmark"></i> &nbsp;Save
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn  btn-success px-3 mt-4 ms-3"
+                  style={{ fontSize: 18, float: "right", marginRight: "20px" }}
+                >
+                  <i class="fa-solid fa-images"></i> &nbsp;
+                  <Link
+                    to="/image"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    Add Image
+                  </Link>
+                </button>
+              </div>
             </form>
           </div>
         </div>
-        
       </div>
     </>
   );
 }
-
