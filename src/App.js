@@ -12,7 +12,7 @@ export default function App() {
     <Router>
       <div>
         {/* // hama page ekatama enna one ewa methanata danawa -- */}
-        <h1>Hello Welcome ! </h1>
+
         <Navbar />
         <div>
           <div>
