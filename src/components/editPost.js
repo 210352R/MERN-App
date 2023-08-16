@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./Navbar";
+import { backEndURL } from "./BackEndURL";
 
 export default function EditPost(props) {
   const [values, setValues] = useState({
@@ -23,7 +25,7 @@ export default function EditPost(props) {
 
   // Fetching data from database   ---
   useEffect(() => {
-    axios.get(`http://localhost:8000/post/${id}`).then((res) => {
+    axios.get(backEndURL(`/post/${id}`)).then((res) => {
       console.log(res.data.existingPost);
       setValues({
         topic: res.data.existingPost.topic,
@@ -39,7 +41,7 @@ export default function EditPost(props) {
 
     // call backend Server ---
     axios
-      .put(`http://localhost:8000/post/update/${id}`, values) // menna methana thmai yanna one body eka yawanne balanna meka
+      .put(backEndURL(`/post/update/${id}`), values) // menna methana thmai yanna one body eka yawanne balanna meka
       .then((res) => {
         if (res.data.success) {
           setValues({
@@ -58,6 +60,7 @@ export default function EditPost(props) {
 
   return (
     <>
+      <Navbar />
       <div className="container justify-content-center">
         <div className="text-align-center">
           <h2 className="h2 font-weight-bold  text-center shadow p-3 rounded">

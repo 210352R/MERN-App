@@ -6,10 +6,11 @@ import "../styles/home.css";
 import myBG from "./myBG.mp4";
 import Typewriter from "typewriter-effect";
 import Animation from "./Animation";
+import Navbar from "./Navbar";
+import { backEndURL } from "./BackEndURL";
 
 export default function Home() {
   const [post, setPost] = useState([]);
-
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function Home() {
     // axios json file convert  karanwa  -----
     // emanisa ena response eka kelinma gann puluwn ----
     axios
-      .get("http://localhost:8000/posts")
+      .get(backEndURL("/posts"))
       .then((res) => {
         if (res.data.success) {
           setPost(res.data.existingPost);
@@ -41,7 +42,7 @@ export default function Home() {
 
   const retrivePosts = () => {
     axios
-      .get("http://localhost:8000/posts")
+      .get(backEndURL("/posts"))
       .then((res) => {
         if (res.data.success) {
           setPost(res.data.existingPost);
@@ -56,7 +57,7 @@ export default function Home() {
   // Hamawelawema axios call kalama return wenne promise ekak -- (JS async process ekak)
   const onDeleteHandle = (id) => {
     axios
-      .delete(`http://localhost:8000/post/delete/${id}`)
+      .delete(backEndURL(`/post/delete/${id}`))
       .then((res) => {
         if (res.data.success) {
           alert("Delete Successfully --- ");
@@ -79,6 +80,7 @@ export default function Home() {
       <div className="textFeild">
         <div className="Home ">
           <div className="container">
+            <Navbar />
             <table class="table" style={{ color: "white" }}>
               <thead>
                 <tr style={{ color: "dodgerblue" }}>

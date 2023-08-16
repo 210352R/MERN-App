@@ -1,51 +1,50 @@
 import React from "react";
-import { useState ,useEffect} from "react";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "./Navbar";
+import { backEndURL } from "./BackEndURL";
 
 export default function CreatePost(props) {
+  const [values, setValues] = useState({
+    topic: "",
+    description: "",
+    postCategory: "",
+  });
 
-  const [values , setValues] = useState({
-    topic :'',
-    description : '',
-    postCategory : ''
-  })
-
-  const onChangeHandler = (e)=>{
-    const {name,value} = e.target;
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [name] : value
-    })
-  }
+      [name]: value,
+    });
+  };
 
-
-  const onClickHandle = (e)=>{
+  const onClickHandle = (e) => {
     e.preventDefault();
     console.log(values);
 
-    // call backend Server --- 
+    // call backend Server ---
     // request body eka yawanne hati balanna
-    axios.post("http://localhost:8000/post/save",values)  // menna methana thmai yanna one body eka yawanne balanna meka
-    .then((res)=>{
-        if(res.data.success){
+    axios
+      .post(backEndURL("/post/save"), values) // menna methana thmai yanna one body eka yawanne balanna meka
+      .then((res) => {
+        if (res.data.success) {
           setValues({
             ...values,
-            topic : '',
-            description : '',
-            postCategory : ''
-          })
+            topic: "",
+            description: "",
+            postCategory: "",
+          });
         }
-    }).catch(()=>{
-      console.log("Error ---------")
-    })
-  }
-
-
-
-
+      })
+      .catch(() => {
+        console.log("Error ---------");
+      });
+  };
 
   return (
     <>
+      <Navbar />
       <div className="container justify-content-center">
         <div className="text-align-center">
           <h2 className="h2 font-weight-bold  text-center shadow p-3 rounded">
@@ -62,7 +61,7 @@ export default function CreatePost(props) {
                   type="text"
                   class="form-control"
                   id="formGroupTopic"
-                  name = 'topic'
+                  name="topic"
                   value={values.topic}
                   onChange={onChangeHandler}
                   placeholder="Enter Topic "
@@ -93,14 +92,17 @@ export default function CreatePost(props) {
                   placeholder="Enter Post Category"
                 />
               </div>
-              <button type="submit" class="btn btn-primary px-3 mt-4 ms-3" style={{fontSize:18}}
-              onClick={onClickHandle}>
-              <i class="fa-regular fa-bookmark"></i> &nbsp;Save
+              <button
+                type="submit"
+                class="btn btn-primary px-3 mt-4 ms-3"
+                style={{ fontSize: 18 }}
+                onClick={onClickHandle}
+              >
+                <i class="fa-regular fa-bookmark"></i> &nbsp;Save
               </button>
             </form>
           </div>
         </div>
-        
       </div>
     </>
   );

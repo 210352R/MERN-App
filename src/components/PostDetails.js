@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { backEndURL } from "./BackEndURL";
 
 export default function PostDetails() {
   // Use the useParams hook to access the 'id' URL parameter
@@ -12,7 +13,7 @@ export default function PostDetails() {
   console.log(id);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/post/${id}`)   // backend eke find eke url type eke request ekak yawanawa -- 
+      .get(backEndURL(`/post/${id}`)) // backend eke find eke url type eke request ekak yawanawa --
       .then((res) => {
         if (res.data.success) {
           setPost(res.data.existingPost);
@@ -31,19 +32,19 @@ export default function PostDetails() {
         <div class="card-header">Post Details </div>
         <div class="card-body">
           <h3 class="card-title">{topic}</h3>
-          <hr/>
+          <hr />
           <div className="row">
-            <div className="col-sm-3 "> <b>Description </b> </div>
+            <div className="col-sm-3 ">
+              {" "}
+              <b>Description </b>{" "}
+            </div>
             <div className="col-sm-9 ">{description}</div>
 
-            <div className="col-sm-3 "><b>Post Catagory </b></div>
+            <div className="col-sm-3 ">
+              <b>Post Catagory </b>
+            </div>
             <div className="col-sm-9">{postCategory}</div>
-
-
-
           </div>
-           
-          
         </div>
       </div>
     </div>
