@@ -1,6 +1,10 @@
 import React from "react";
 import { auth, provider } from "../fireBase/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  FacebookAuthProvider,
+} from "firebase/auth";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -20,6 +24,23 @@ export default function Google() {
       await signInWithPopup(auth, provider);
       alert("Login Successfull --- ");
       setUser(auth?.currentUser?.mail);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const signInWithFacebook = async () => {
+    const fbprovider = new FacebookAuthProvider();
+    // signInWithPopup(auth, fbprovider)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    try {
+      await signInWithPopup(auth, fbprovider);
+      alert("Login Successfull --- ");
     } catch (err) {
       console.error(err);
     }
@@ -101,6 +122,7 @@ export default function Google() {
                   <button
                     class="btn btn-lg btn-block btn-primary my-2"
                     style={{ backgroundColor: " #3b5998" }}
+                    onClick={signInWithFacebook}
                     type="submit"
                   >
                     <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
