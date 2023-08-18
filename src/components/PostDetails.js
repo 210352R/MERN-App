@@ -25,7 +25,7 @@ export default function PostDetails() {
         console.log("Error -- 2 ");
       });
   }, []);
-  const { topic, description, postCategory } = post;
+  const { topic, description, postCategory } = post; // object distructuring -----
   return (
     <div>
       <div class="card container">

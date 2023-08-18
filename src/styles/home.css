@@ -6,6 +6,9 @@
 .All {
   width: 100%;
   height: 100vh;
+  background-image: url(../images/MainBackGround.webp);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .mmv {
@@ -14,9 +17,12 @@
   object-fit: cover;
 }
 .textFeild {
+  margin-top: 20px;
+
   position: absolute;
   top: 0;
-  display: flex;
+  position: fixed;
+  overflow: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;

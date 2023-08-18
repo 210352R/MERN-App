@@ -71,11 +71,11 @@ export default function Home() {
 
   return (
     <div className="All">
-      <video ref={videoRef} width="400" className="mmv" loop>
-        <source src={myBG} type="video/mp4" />
-        {/* You can provide additional <source> elements for other video formats */}
-        Your browser does not support the video tag.
-      </video>
+      {/* <video ref={videoRef} width="400" className="mmv" loop> */}
+      {/* <source src={myBG} type="video/mp4" /> */}
+      {/* You can provide additional <source> elements for other video formats */}
+      {/* Your browser does not support the video tag. */}
+      {/* </video> */}
       <div className="overlay"></div>
       <div className="textFeild">
         <div className="Home ">
@@ -164,6 +164,9 @@ export default function Home() {
                   loop: true,
                 }}
               />
+            </div>
+            <div className="footer">
+              <p></p>
             </div>
             <div style={{ float: "right" }}>
               <Animation />
